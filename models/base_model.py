@@ -20,9 +20,16 @@ class BaseModel:
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
+        '''
+        updates updated_at with the current datetime
+        '''
         self.updated_at = datetime.now()
 
     def to_dict(self):
+        '''
+        returns a dictionary with all
+        keys/values of __dict__ of the instance
+        '''
         data = self.__dict__.copy()
         data['__class__'] = self.__class__.__name__
         data['created_at'] = self.created_at.isoformat()
