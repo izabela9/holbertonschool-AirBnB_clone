@@ -13,7 +13,6 @@ class HBNBCommand(Cmd):
         """
         return True
 
-
     def do_EOF(self, arg):
         """
         EOF command to exit the program
@@ -26,8 +25,9 @@ class HBNBCommand(Cmd):
         """
         pass
 
+
 if __name__ == '__main__':
     try:
         HBNBCommand().cmdloop()
-    except(EOFError, KeyboardInterrupt):
+    except (EOFError, KeyboardInterrupt):
         exit(0)
