@@ -11,23 +11,22 @@ class HBNBCommand(cmd.Cmd):
         """
         Quit command to exit the program
         """
-        return True
+        exit(0)
 
     def do_EOF(self, arg):
         """
         EOF command to exit the program
         """
-        return True
+        exit(0)
 
+'''
     def emptyline(self):
         """
         An empty line + ENTER shouldn’t execute anything
         """
         pass
+        '''
 
 
 if __name__ == '__main__':
-    try:
-        HBNBCommand().cmdloop()
-    except (EOFError, KeyboardInterrupt):
-        exit(0)
+    HBNBCommand().cmdloop()
