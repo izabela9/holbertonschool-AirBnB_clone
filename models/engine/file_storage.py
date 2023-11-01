@@ -12,7 +12,6 @@ class FileStorage:
     '''
     __file_path = "file.json"
     __objects = {}
-    cls_dict = {'BaseModel': BaseModel}
 
     def all(self):
         '''
@@ -42,13 +41,11 @@ class FileStorage:
         functiont to deserialize json files to objects
         '''
         try:
-            with open(FileStorage.__file_path, 'r') as f:
+            with open(FileStorage.__file_path, "r") as f:
                 data = json.load(f)
             for key, value in data.items():
-                cls_name, obj_id = key.split(".")
-                obj_cls = FileStorage.cls_dict.get(cls_name)
-                if obj_cls is not None:
-                    obj = obj_cls(**value)
-                    FileStorage.__objects[key] = obj
-        except FileNotFoundError:
+                cls_name, obj_id = key.split('.')
+                obj = eval(cls_name)(**value)
+                self.new(obj)
+        except Exception as e:
             pass
