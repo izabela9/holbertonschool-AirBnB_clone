@@ -3,7 +3,7 @@
 from cmd import Cmd
 
 
-class CMD:
+class HBNBCommand(cmd.Cmd):
 
     prompt = '(hbnb) '
 
