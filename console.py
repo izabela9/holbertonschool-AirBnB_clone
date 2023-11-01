@@ -19,14 +19,12 @@ class HBNBCommand(cmd.Cmd):
         """
         exit(0)
 
-
-'''
     def emptyline(self):
         """
         An empty line + ENTER shouldn’t execute anything
         """
         pass
-        '''
+
 
 
 if __name__ == '__main__':
