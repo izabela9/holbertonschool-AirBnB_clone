@@ -46,7 +46,7 @@ class FileStorage:
                 for key, value in data.items():
                     cls_name, obj_id = key.split(".")
                     obj_class = globals()[cls_name]
-                    obj = BaseModel(**value)
-                    FileStorage.__objects[key] = obj
+                    obj = obj_class(**value)
+                    self.new(obj)
         except FileNotFoundError:
             pass
