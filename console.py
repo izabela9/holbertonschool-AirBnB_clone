@@ -12,16 +12,6 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = '(hbnb) '
     
-
-    def __init__(self):
-        self.commands = {
-                "create": self.create,
-                "show": self.show,
-                "destroy": self.destroy,
-                "all": self.all,
-                "update": self.update
-                }
-
     def create(self, args):
         """
         Create method
