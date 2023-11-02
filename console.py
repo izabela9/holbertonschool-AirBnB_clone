@@ -35,33 +35,71 @@ class HBNBCommand(cmd.Cmd):
             instance = save()
             print(instance.id)
 
-    def show(self, args):
+    def do_show(self, arg):
+        """Prints the string representation of an instance"""
+        args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel"]:
+        elif args[0] not in models.classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
         else:
-            instance_id = args[1]
-            if instance_id not in storage.all(BaseModel):
+            key = args[0] + "." + args[1]
+            if key not in models.storage.all():
                 print("** no instance found **")
             else:
-                instance = storage.all(BaseModel)[instamnce_id]
-                print(str(instance))
+                print(models.storage.all()[key])
 
-    def destroy(self, args):
+    def do_destroy(self, arg):
+        """Deletes an instance based on the class name and id"""
+        args = arg.split()
+        if len(args) == 0:
+            print("** class name missing **")
+        elif args[0] not in models.classes:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        else:
+            key = args[0] + "." + args[1]
+            if key not in models.storage.all():
+                print("** no instance found **")
+            else:
+                del models.storage.all()[key]
+                models.storage.save()
 
+    def do_all(self, arg):
+        """Prints all string representation of all instances"""
+        args = arg.split()
+        if len(args) > 0 and args[0] not in models.classes:
+            print("** class doesn't exist **")
+        else:
+            for key in models.storage.all():
+                if len(args) > 0 and key.split('.')[0] != args[0]:
+                    continue
+                print(models.storage.all()[key])
 
-    def all(self, args):
+    def do_update(self, arg):
+        """Updates an instance based on the class name and id"""
+        args = shlex.split(arg)
+        if len(args) == 0:
+            print("** class name missing **")
+        elif args[0] not in models.classes:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        else:
+            key = args[0] + "." + args[1]
+            if key not in models.storage.all():
+                print("** no instance found **")
+            elif len(args) == 2:
+                print("** attribute name missing **")
+            elif len(args) == 3:
+                print("** value missing **")
+            else:
+                setattr(models.storage.all()[key], args[2], type(getattr(models.storage.all()[key], args[2]))(args[3]))
+                models.storage.all()[key].save()
 
-    def update(self, args):
-
-    def run(self, args):
-        while True:
-            command = input("$ ").split()
-            if command[0] in self.commands:
-                self.commands[comand[0]](command[1:])
 
     def do_quit(self, arg):
         """
