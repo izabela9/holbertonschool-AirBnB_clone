@@ -5,6 +5,12 @@ Defines the HBNBCommand class.
 import models
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -13,7 +19,9 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = '(hbnb) '
 
-    valid_classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
+    valid_classes = [
+        'BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review'
+                    ]
 
     def do_create(self, line):
         """Create a new instance, save it, and print its ID."""
@@ -21,13 +29,13 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        class_name = line
-        try:
-            new_instance = eval(class_name)()
-            new_instance.save()
-            print(new_instance.id)
-        except NameError:
+        args = line.split()
+        if args[0] not in self.valid_classes:
             print("** class doesn't exist **")
+            return
+        new_instance = eval(args[0])()
+        new_instance.save()
+        print(new_instance.id)
 
     def do_show(self, line):
         """Print the string representation of an instance
