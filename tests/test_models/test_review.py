@@ -10,7 +10,7 @@ import sys
 import unittest
 import os
 import datetime
-from models.user import User
+from models.review import Review
 from models import storage
 
 
@@ -26,8 +26,8 @@ class TestUser(unittest.TestCase):
         making it available for managing and persisting data.
         '''
 
-        base1 = User()
-        base2 = User()
+        base1 = Review()
+        base2 = Review()
         self.assertNotEqual(base1.id, base2.id)
         self.assertNotEqual(base1.created_at, base2.created_at)
         self.assertNotEqual(base1.updated_at, base2.updated_at)
@@ -38,35 +38,18 @@ class TestUser(unittest.TestCase):
         making it available for managing and persisting data.
         '''
 
-        base1 = User()
+        base1 = Review()
         self.assertEqual(type(base1.id), str)
         self.assertEqual(type(base1.created_at), datetime.datetime)
         self.assertEqual(type(base1.updated_at), datetime.datetime)
 
-    def test_email(self):
+    def test_all_attributes(self):
         '''
         This script initializes a FileStorage instance and reloads data,
         making it available for managing and persisting data.
         '''
 
-        base = User()
-        self.assertEqual(base.email, '')
-
-    def test_password(self):
-        '''
-        This script initializes a FileStorage instance and reloads data,
-        making it available for managing and persisting data.
-        '''
-
-        base = User()
-        self.assertEqual(base.password, '')
-
-    def test_user_first_name_last_name(self):
-        '''
-        This script initializes a FileStorage instance and reloads data,
-        making it available for managing and persisting data.
-        '''
-
-        base = User()
-        self.assertEqual(base.first_name, '')
-        self.assertEqual(base.last_name, '')
+        base = Review()
+        self.assertEqual(base.place_id, '')
+        self.assertEqual(base.user_id, '')
+        self.assertEqual(base.text, '')

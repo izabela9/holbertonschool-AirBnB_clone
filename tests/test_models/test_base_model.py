@@ -10,11 +10,11 @@ import sys
 import unittest
 import os
 import datetime
-from models.user import User
+from models.base_model import BaseModel
 from models import storage
 
 
-class TestUser(unittest.TestCase):
+class TestBaseModel(unittest.TestCase):
     '''
     This script initializes a FileStorage instance and reloads data,
     making it available for managing and persisting data.
@@ -26,8 +26,8 @@ class TestUser(unittest.TestCase):
         making it available for managing and persisting data.
         '''
 
-        base1 = User()
-        base2 = User()
+        base1 = BaseModel()
+        base2 = BaseModel()
         self.assertNotEqual(base1.id, base2.id)
         self.assertNotEqual(base1.created_at, base2.created_at)
         self.assertNotEqual(base1.updated_at, base2.updated_at)
@@ -38,35 +38,48 @@ class TestUser(unittest.TestCase):
         making it available for managing and persisting data.
         '''
 
-        base1 = User()
+        base1 = BaseModel()
         self.assertEqual(type(base1.id), str)
         self.assertEqual(type(base1.created_at), datetime.datetime)
         self.assertEqual(type(base1.updated_at), datetime.datetime)
 
-    def test_email(self):
+    def test_storage(self):
         '''
         This script initializes a FileStorage instance and reloads data,
         making it available for managing and persisting data.
         '''
 
-        base = User()
-        self.assertEqual(base.email, '')
+        base = BaseModel()
+        self.assertNotEqual(len(storage.all()), 0)
 
-    def test_password(self):
+    def test_save(self):
         '''
         This script initializes a FileStorage instance and reloads data,
         making it available for managing and persisting data.
         '''
 
-        base = User()
-        self.assertEqual(base.password, '')
+        base = BaseModel()
+        time = base.save()
+        self.assertEqual(base.updated_at, time)
 
-    def test_user_first_name_last_name(self):
+    def test_to_dict(self):
         '''
         This script initializes a FileStorage instance and reloads data,
         making it available for managing and persisting data.
         '''
 
-        base = User()
-        self.assertEqual(base.first_name, '')
-        self.assertEqual(base.last_name, '')
+        base = BaseModel()
+        new_d = base.to_dict()
+        self.assertEqual(new_d['id'], base.id)
+        self.assertEqual(new_d['created_at'], base.created_at.isoformat())
+        self.assertEqual(new_d['updated_at'], base.updated_at.isoformat())
+
+    def test_to_str(self):
+        '''
+        This script initializes a FileStorage instance and reloads data,
+        making it available for managing and persisting data.
+        '''
+
+        base = BaseModel()
+        x = base
+        self.assertEqual(base, x)
