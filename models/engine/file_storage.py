@@ -25,6 +25,7 @@ class FileStorage:
         '''
         key = f"{obj.__class__.__name__}.{obj.id}"
         FileStorage.__objects[key] = obj
+        return True
 
     def save(self):
         '''
@@ -35,6 +36,7 @@ class FileStorage:
             obj_dictionary[key] = value.to_dict()
         with open(FileStorage.__file_path, 'w') as f:
             json.dump(obj_dictionary, f)
+        return True
 
     def reload(self):
         '''
@@ -47,5 +49,6 @@ class FileStorage:
                     cls_name, obj_id = key.split('.')
                     obj = eval(cls_name)(**value)
                     self.new(obj)
+            return True
         except Exception as e:
-            pass
+            return False
