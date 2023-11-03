@@ -13,6 +13,9 @@ class BaseModel:
     '''
 
     def __init__(self, *args, **kwargs):
+        """
+        Initalization of attributes
+        """
         from models import storage
         if kwargs:
             for key, value in kwargs.items():
