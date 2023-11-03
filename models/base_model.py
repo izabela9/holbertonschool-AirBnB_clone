@@ -2,6 +2,8 @@
 '''
 Module for base model
 '''
+
+
 import models
 import uuid
 from datetime import datetime
@@ -34,6 +36,9 @@ class BaseModel:
             storage.new(self)
 
     def __str__(self):
+        '''
+        String representation of the instance
+        '''
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
